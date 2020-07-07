@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/entity/collectable.gd" type="Script" id=1]
+
+[node name="oak tree" type="Spatial"]
+script = ExtResource( 1 )
+requires_tool = "hatchet"

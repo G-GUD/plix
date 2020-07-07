@@ -1,13 +1,12 @@
-extends Node
+extends "res://scripts/game.gd"
 
 
 # Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	server = true
+	
 	var peer = NetworkedMultiplayerENet.new()
 	
 	get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -17,9 +16,10 @@ func _ready():
 	get_tree().network_peer = peer
 
 
-func _player_connected(id):
+func _player_connected(id, client_info):
 	# Called on both clients and server when a peer connects. Send my info to it.
-	rpc_id(id, "register_player", my_info)
+	player_info[id] = client_info
+	rpc_id(id, "buildWorld", world_info)
 
 func _player_disconnected(id):
 	player_info.erase(id) # Erase player from info.

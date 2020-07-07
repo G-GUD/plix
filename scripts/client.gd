@@ -1,13 +1,13 @@
-extends Node
+extends "res://scripts/game.gd"
 
 
 # Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
+func 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	server = false
+	
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	get_tree().connect("connected_to_server", self, "_connected_ok")
@@ -17,11 +17,6 @@ func _ready():
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_client("127.0.0.1", 8081)
 	get_tree().network_peer = peer
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 
 remote func pre_configure_game(player_info):
 	var selfPeerID = get_tree().get_network_unique_id()
@@ -45,3 +40,8 @@ remote func pre_configure_game(player_info):
 
 	# Tell server (remember, server is always ID=1) that this peer is done pre-configuring.
 	rpc_id(1, "done_preconfiguring", selfPeerID)
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+
