@@ -36,10 +36,20 @@ const samedata = {
 }
 
 func generate(worlddata):
-	
+	var ringData = []
 	
 	for w in worlddata:
-		
+		ringData.push_back(generateLayer(ringData, worlddata[w]))
+
+func generateLayer(ringData, layerdata):
+	if ringData.size() == 0 :
+		generateCore(layerdata[0])
+	var n = layerdata.size() * 2
+	var theta = 360 / n
+	
+
+func generateCore(firstRing):
+	pass
 
 
 # Called when the node enters the scene tree for the first time.
@@ -50,3 +60,6 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+func wedgeArea(theta, rin, rout):
+	return theta * rout * rout - theta * rin * rin
